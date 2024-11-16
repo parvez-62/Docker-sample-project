@@ -1,114 +1,85 @@
+# Hosting a Website with Docker Using Apache (httpd) 
 
-# Hosting a Static Website with Docker
+This project demonstrates how to containerize and host a simple website using Docker. We will create a Docker image that runs an Apache HTTP server (httpd) and serves a static website. The resulting container can be easily deployed on any machine with Docker installed.
 
-This project demonstrates how to containerize and host a simple static website using Docker. We will create a Docker image that runs an Apache HTTP Server to serve the website’s static files. This containerized website can be deployed on any machine with Docker installed, whether locally or in the cloud.
+**Features**
 
-## Features
-- **Dockerized**: The website is packaged and deployed within a Docker container.
-- **Web Server**: We use Apache HTTP Server to serve the website’s static content.
-- **Portability**: The website can be deployed on any platform that supports Docker, such as AWS EC2, Azure, or your local machine.
+**Dockerized: The website is packaged and deployed within a Docker container.**
 
-## Prerequisites
-Before starting, ensure that you have the following software installed on your machine:
+**Web Server: Apache HTTP server (httpd) is used to serve the website's static files.**
 
-- **Docker**
-- **Git**
+**Portability: The website can be deployed to any platform that supports Docker, such as AWS EC2, Azure, or a local machine.**
 
----
+Prerequisites
 
-## Getting Started
+Before starting, ensure you have the following installed on your machine:
+
+**Docker**
+
+**Git**
+
+Getting Started
+
+**1. Clone the Repository**
+
+Clone the repository to your local machine:
+
+```git clone https://github.com/yourusername/your-repository.git```  
+```cd your-repository```
+  
+**2. Create the Dockerfile**
+
+Navigate into your project directory (if not already there):
+
+```cd <your-project-directory>```
+
+Create a Dockerfile in this directory:
 
 
-# Hosting a Static Website with Docker
+```nano Dockerfile```
 
-This project demonstrates how to containerize and host a simple static website using Docker. We will create a Docker image that runs an Apache HTTP Server to serve the website’s static files. This containerized website can be deployed on any machine with Docker installed, whether locally or in the cloud.
+Add the following content to your Dockerfile:
 
-## Features
-- **Dockerized**: The website is packaged and deployed within a Docker container.
-- **Web Server**: We use Apache HTTP Server to serve the website’s static content.
-- **Portability**: The website can be deployed on any platform that supports Docker, such as AWS EC2, Azure, or your local machine.
+dockerfile
+# Use the official Apache HTTP server image as the base  
+FROM httpd:2.4  
 
-## Prerequisites
-Before starting, ensure that you have the following software installed on your machine:
+# Copy the static website files into the Apache document root  
+COPY . /usr/local/apache2/htdocs/  
 
-- **Docker**
-- **Git**
-
----
-
-## Getting Started
-
-### 1. Clone the Repository
-To get started, clone the repository to your local machine:
-
-```bash
-git clone https://github.com/yourusername/your-repository.git
-cd your-repository
-
-2. Create the Dockerfile
-Now, create a Dockerfile in your project directory. This file will define the Docker image that runs the Apache HTTP Server and serves your static website.
-
-Navigate into your project directory (if you haven't already):
-
-bash
-Copy code
-cd <your-project-directory>
-Create the Dockerfile using a text editor:
-
-bash
-Copy code
-nano Dockerfile
-Paste the following content into the Dockerfile:
-
-Dockerfile
-Copy code
-# Use the official Apache HTTP Server image
-FROM httpd:alpine
-
-# Copy the static files from your local project directory to the Apache server's directory
-COPY ./ /usr/local/apache2/htdocs/
-
-# Expose port 80 for HTTP traffic
+# Expose port 80 for the web server  
 EXPOSE 80
-Save and exit the text editor:
 
-In nano, press Ctrl + X, then Y to confirm, and hit Enter.
-3. Build the Docker Image
-Once you have the Dockerfile ready, build the Docker image using the following command:
+Save and exit:
 
-bash
-Copy code
-docker build -t website-image .
-This will create a Docker image named website-image using the files in the current directory.
+```Press Ctrl + X, then Y to confirm, and hit Enter.```
 
-4. Run the Docker Container
-After the image is built, you can run the container to serve the website. Use the following command to run the container in detached mode and map port 8080 on your host machine to port 80 inside the container (the default HTTP port for Apache):
+**3. Build the Docker Image**
+Build the Docker image using the Dockerfile:
 
-bash
-Copy code
-docker run -d -p 8080:80 website-image
-5. Access the Website
-Once the container is running, you can access the website by navigating to:
+```docker build -t website-image .```
 
-Locally:
+**4. Run the Docker Container**
+Run the container to serve the website:
 
-http
-Copy code
-http://localhost:8080
-On a remote server (e.g., AWS EC2):
+```docker run -d -p 8080:80 website-image``` 
 
-Replace localhost with the public IP address of your EC2 instance:
+This command maps port 8080 on your host machine to port 80 inside the container, which is the default HTTP port for Apache.
 
-http
-Copy code
-http://<your-server-ip>:8080
-This URL will display the website served by your Docker container.
+**5. Access the Website**
+Once the container is running, access the website by navigating to:
+
+```Locally: http://localhost:8080```
+
+On a remote server (e.g., AWS EC2): Replace localhost with your server's public IP:
+
+```http://<your-server-ip>:8080```
 
 
+**Conclusion
+This project demonstrates how to host a static website using Docker and Apache HTTP server. You can easily customize and extend the website content within the repository for your needs.**
 
+Feel free to contribute or open issues if you encounter any problems!
 
-
-
-
-
-
+License
+This project is licensed under the MIT License.
